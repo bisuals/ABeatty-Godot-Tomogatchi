@@ -34,5 +34,5 @@ func _on_button_pressed():
 	Global.coins -= room_price
 	roomManager.room_purchased()
 	shop_container.visible = false
-	screen_text_label.text = 'Thank you for your purchase!'
+	screen_text_label.text = 'Purchased successfully!'
 	screen_text_label.visible = true
