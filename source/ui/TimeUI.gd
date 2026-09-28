@@ -16,13 +16,11 @@ var day: int
 var hour: int
 var minute: int
 
-# speeding up gameplay
+# speeding up gameplay # fixing speed issue
 
-@export var INGAME_SPEED = 5.0
-@export var INITIAL_HOUR = 0:
-	set(h):
-		INITIAL_HOUR = h
-		time = INGAME_TO_REAL_MINUTE_DURATION * INITIAL_HOUR * MINUTES_PER_HOUR
+@export var INGAME_SPEED = 3.0
+@export var INITIAL_HOUR = 12
+# deleted setter to prevent parse error
 var time = 0.0
 var past_minute = -5.0
 # Called when the node enters the scene tree for the first time.
@@ -68,6 +66,6 @@ func set_time():
 
 func sleep_toggled(pet_state):
 	if pet_state == Pet.PetState.SLEEPING:
-		INGAME_SPEED = INGAME_SPEED * 20  
+		INGAME_SPEED = INGAME_SPEED * 5  
 	else:
 		INGAME_SPEED = INGAME_SPEED / 2
