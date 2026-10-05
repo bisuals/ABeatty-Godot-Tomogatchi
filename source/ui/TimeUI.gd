@@ -16,22 +16,37 @@ var day: int
 var hour: int
 var minute: int
 
-# speeding up gameplay # fixing speed issue
+# Speeding up gameplay
+@export var INGAME_SPEED = 2.0
+@export var SLEEP_SPEED_MULTIPLIER = 4.0   # 2.0 x 4.0 = 8, same as your sleep speed
+@export var INITIAL_HOUR = 0:
+	set(h):
+		INITIAL_HOUR = h
+		time = INGAME_TO_REAL_MINUTE_DURATION * INITIAL_HOUR * MINUTES_PER_HOUR
 
-@export var INGAME_SPEED = 3.0
-@export var INITIAL_HOUR = 12
-# deleted setter to prevent parse error
 var time = 0.0
-var past_minute = -5.0
-# Called when the node enters the scene tree for the first time.
+var sleeping = false
+# The last absolute in-game minute we emitted a tick for.
+var last_emitted_minute = 0
+
 func _ready():
 	time = INGAME_TO_REAL_MINUTE_DURATION * INITIAL_HOUR * MINUTES_PER_HOUR
+	sync_to_time()
 	pet.pet_actions.sleepingToggled.connect(sleep_toggled)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
-	recalculate_time()
+	var speed = INGAME_SPEED * (SLEEP_SPEED_MULTIPLIER if sleeping else 1.0)
+	time += delta * INGAME_TO_REAL_MINUTE_DURATION * speed
+
+	# Emit one tick for EVERY minute that passed, so no minute is ever skipped
+	# (at high speed a single frame can cover several minutes).
+	var target_minute = int(time / INGAME_TO_REAL_MINUTE_DURATION)
+	while last_emitted_minute < target_minute:
+		last_emitted_minute += 1
+		_update_clock(last_emitted_minute)
+		time_tick.emit(day, hour, minute)
+	set_time()
+	rotate_daytime_sprite(target_minute % MINUTES_PER_DAY)
 
 func on_save_game(saved_data:Array[SavedData]):
 	var my_data = SavedTime.new()
@@ -40,32 +55,28 @@ func on_save_game(saved_data:Array[SavedData]):
 
 func on_load_game(saved_data:SavedData):
 	time = saved_data.time
-		
-func recalculate_time():
-	var total_minutes = int(time / INGAME_TO_REAL_MINUTE_DURATION)
-	day = int(total_minutes / MINUTES_PER_DAY)
+	# Jump straight to the loaded time WITHOUT replaying every minute in between.
+	sync_to_time()
+
+func sync_to_time():
+	last_emitted_minute = int(time / INGAME_TO_REAL_MINUTE_DURATION)
+	_update_clock(last_emitted_minute)
+	set_time()
+
+func _update_clock(total_minutes:int):
+	day = total_minutes / MINUTES_PER_DAY
 	var current_day_minutes = total_minutes % MINUTES_PER_DAY
-	hour = int(current_day_minutes / MINUTES_PER_HOUR)
-	minute = int(current_day_minutes % MINUTES_PER_HOUR)
-	
-	if minute != past_minute:
-		past_minute = minute
-		time_tick.emit(day, hour, minute)
-		set_time()
-		rotate_daytime_sprite(current_day_minutes)
+	hour = current_day_minutes / MINUTES_PER_HOUR
+	minute = current_day_minutes % MINUTES_PER_HOUR
 
 func rotate_daytime_sprite(current_day_minutes):
 	if current_day_minutes != 0:
-		sprite.rotation_degrees = ((current_day_minutes / 360.0) * 90) + 160 # Temp # Set the rotation of the daytime sprite to the current minute, one day is one full rotation.
-	
-func set_time():
-	daysLabel.text = 'Day'+ str(day+1)
-	hoursLabel.text = str(hour) + ':' + str(minute)
-	
-# Increased speed of sleep time
+		sprite.rotation_degrees = ((current_day_minutes / 360.0) * 90) + 160 # Temp
 
+func set_time():
+	daysLabel.text = 'Day' + str(day + 1)
+	hoursLabel.text = "%d:%02d" % [hour, minute] # %02d so 5:03 doesn't show as 5:3
+
+# Speed up time while sleeping; derived from state, so it can't drift.
 func sleep_toggled(pet_state):
-	if pet_state == Pet.PetState.SLEEPING:
-		INGAME_SPEED = INGAME_SPEED * 5  
-	else:
-		INGAME_SPEED = INGAME_SPEED / 2
+	sleeping = (pet_state == pet.PetState.SLEEPING)

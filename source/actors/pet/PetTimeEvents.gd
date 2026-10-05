@@ -16,27 +16,32 @@ const XP_GAIN_INTERVAL = 10
 func _ready():
 	timeUI.time_tick.connect(process_time_events)
 
-func process_time_events(_day, _hour, minute):
+func process_time_events(day, hour, minute):
+	# Use absolute minutes, NOT minute-of-the-hour. "minute % 45" restarts every hour,
+	# so the gaps were 45, 15, 45, 15... and everything fired together at :00.
+	var total = day * 1440 + hour * 60 + minute
+
 	if pet.state == pet.PetState.SLEEPING:
 		pet.pet_stats.tiredness -= 1
 		pet.pet_actions.reaction_popup('sick')
 		if pet.pet_stats.tiredness == 0:
 			pet.pet_actions.toggle_sleep()
-	if minute % HUNGER_INTERVAL == 0:
+	if total % HUNGER_INTERVAL == 0:
 		pet.pet_stats.hunger += 5
 		pet.pet_actions.feed_counter -= 1
-	if minute % HAPPINESS_INTERVAL == 0:
+	if total % HAPPINESS_INTERVAL == 0:
 		pet.pet_stats.happiness -= 5
 		pet.pet_actions.pet_counter -= 1
-	if minute % int(max(HYGINE_INTERVAL - (HYGINE_INTERVAL * pet.pet_actions.poop_counter * 0.2), 5)) == 0: # Make hygiene interval shorter by 20% for each poop, dont go below max value (5)
+	var hygiene_interval = int(max(HYGINE_INTERVAL - (HYGINE_INTERVAL * pet.pet_actions.poop_counter * 0.2), 5))
+	if total % hygiene_interval == 0:
 		pet.pet_stats.hygiene -= 5
-	if minute % FUN_INTERVAL == 0:
+	if total % FUN_INTERVAL == 0:
 		pet.pet_stats.fun -= 5
-	if minute % SOCIAL_INTERVAL == 0:
+	if total % SOCIAL_INTERVAL == 0:
 		pet.pet_stats.social -= 5
-	if minute % TIRED_INTERVAL == 0 and pet.state != pet.PetState.SLEEPING:
+	if total % TIRED_INTERVAL == 0 and pet.state != pet.PetState.SLEEPING:
 		pet.pet_stats.tiredness += 5
-	if minute % POOP_INTERVAL == 0:
+	if total % POOP_INTERVAL == 0:
 		pet.pet_actions.random_poop_chance()
-	if minute % XP_GAIN_INTERVAL == 0:
+	if total % XP_GAIN_INTERVAL == 0:
 		pet.gain_xp_based_on_stats(pet.pet_stats.average_stats)
