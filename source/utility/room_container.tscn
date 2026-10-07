@@ -1,7 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://x7ulk5y4x1li"]
+[gd_scene format=3 uid="uid://x7ulk5y4x1li"]
 
 [ext_resource type="PackedScene" uid="uid://bg757h4e5vxyu" path="res://source/levels/room.tscn" id="1_iw80x"]
 
-[node name="RoomContainer" type="Node"]
+[node name="RoomContainer" type="Node" unique_id=1076205552]
 
-[node name="Room" parent="." instance=ExtResource("1_iw80x")]
+[node name="Room" parent="." unique_id=705956272 instance=ExtResource("1_iw80x")]
+scale = Vector2(1, 1.0082554)

@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqkb8dmn22any"]
+[gd_scene format=3 uid="uid://cqkb8dmn22any"]
 
-[ext_resource type="Script" path="res://source/ui/TimeUI.gd" id="1_aqu4x"]
+[ext_resource type="Script" uid="uid://d4f0le8n7n24h" path="res://source/ui/TimeUI.gd" id="1_aqu4x"]
 [ext_resource type="Texture2D" uid="uid://byds6rjit6mxv" path="res://assets/img/day-night.jpg" id="2_3g00f"]
 
-[node name="TimeUI" type="Control" groups=["TimeUI"]]
+[node name="TimeUI" type="Control" unique_id=1452390644 groups=["TimeUI"]]
 layout_mode = 3
 anchors_preset = 6
 anchor_left = 1.0
@@ -15,21 +15,22 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_aqu4x")
 
-[node name="MinutesLabel" type="Label" parent="."]
+[node name="MinutesLabel" type="Label" parent="." unique_id=518385623]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 vertical_alignment = 1
 
-[node name="HoursLabel" type="Label" parent="."]
+[node name="HoursLabel" type="Label" parent="." unique_id=2057874414]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = -69.0
-offset_bottom = 23.0
+offset_top = 22.0
+offset_bottom = 45.0
 text = "dwdw"
 
-[node name="DaysLabel" type="Label" parent="."]
+[node name="DaysLabel" type="Label" parent="." unique_id=1574595340]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = -62.0
@@ -37,7 +38,7 @@ offset_top = -22.0
 offset_right = -22.0
 offset_bottom = 1.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=880622611]
 visible = false
 position = Vector2(1, -255)
 rotation = -6.28319
