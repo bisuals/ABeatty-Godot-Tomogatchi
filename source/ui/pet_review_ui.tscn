@@ -1,18 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://du01hmedyac8e"]
+[gd_scene format=3 uid="uid://du01hmedyac8e"]
 
-[ext_resource type="Script" path="res://source/ui/pet_outro_ui.gd" id="1_krbcd"]
+[ext_resource type="Script" uid="uid://d2plsvepu4837" path="res://source/ui/pet_outro_ui.gd" id="1_krbcd"]
 [ext_resource type="Texture2D" uid="uid://r05oud0to665" path="res://assets/img/inventory-background.png" id="2_0edfb"]
 [ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/Pets/capybara.png" id="3_ydn1s"]
 [ext_resource type="Texture2D" uid="uid://d2i8wlqqqv23s" path="res://assets/img/coin.png" id="4_gv863"]
 [ext_resource type="FontFile" uid="uid://bke1fbpihgop1" path="res://assets/fonts/PixeloidMono.ttf" id="4_muogi"]
 
-[node name="PetReviewUI" type="Panel"]
+[node name="PetReviewUI" type="Panel" unique_id=1807704247]
 process_mode = 3
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_krbcd")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=326618001]
 layout_mode = 1
 offset_right = 314.0
 offset_bottom = 153.0
@@ -23,58 +23,60 @@ patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect" unique_id=303858080]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 2.0
-offset_right = -2.0
-offset_bottom = -29.0
+offset_left = 7.9999995
+offset_top = 9.0
+offset_right = 6.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.7694314, 0.71929973)
 
-[node name="PetImage" type="TextureRect" parent="NinePatchRect/HBoxContainer"]
+[node name="PetImage" type="TextureRect" parent="NinePatchRect/HBoxContainer" unique_id=1665609285]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("3_ydn1s")
-stretch_mode = 3
+expand_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/HBoxContainer"]
-custom_minimum_size = Vector2(260, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/HBoxContainer" unique_id=1165077023]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="NameLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer" unique_id=66401433]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_muogi")
 theme_override_font_sizes/font_size = 10
 text = "Name: Jeff"
 
-[node name="AnimalLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer"]
+[node name="AnimalLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer" unique_id=177728216]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_muogi")
 theme_override_font_sizes/font_size = 10
 text = "Animal: Capybara"
 
-[node name="StayLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer"]
+[node name="StayLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer" unique_id=1370079434]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_muogi")
 theme_override_font_sizes/font_size = 10
 text = "Stay Duration: 1 day"
 
-[node name="StatsLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer"]
+[node name="StatsLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer" unique_id=1948557791]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_muogi")
 theme_override_font_sizes/font_size = 10
 text = "Average Stats: 50%"
 
-[node name="ReviewLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer"]
+[node name="ReviewLabel" type="Label" parent="NinePatchRect/HBoxContainer/VBoxContainer" unique_id=1284958079]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_muogi")
@@ -82,7 +84,7 @@ theme_override_font_sizes/font_size = 10
 text = "Review:Once preloaded, you can access data from reviewsJSON just like a regular dictionary in GDScript, n"
 autowrap_mode = 1
 
-[node name="StarsContainer" type="HBoxContainer" parent="NinePatchRect"]
+[node name="StarsContainer" type="HBoxContainer" parent="NinePatchRect" unique_id=1458880569]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -100,43 +102,43 @@ scale = Vector2(0.7, 0.7)
 size_flags_vertical = 4
 alignment = 1
 
-[node name="StarRatingImage" type="TextureRect" parent="NinePatchRect/StarsContainer"]
+[node name="StarRatingImage" type="TextureRect" parent="NinePatchRect/StarsContainer" unique_id=1025523837]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("4_gv863")
 
-[node name="StarRatingImage2" type="TextureRect" parent="NinePatchRect/StarsContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-texture = ExtResource("4_gv863")
-stretch_mode = 1
-
-[node name="StarRatingImage3" type="TextureRect" parent="NinePatchRect/StarsContainer"]
+[node name="StarRatingImage2" type="TextureRect" parent="NinePatchRect/StarsContainer" unique_id=1606071393]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("4_gv863")
 stretch_mode = 1
 
-[node name="StarRatingImage4" type="TextureRect" parent="NinePatchRect/StarsContainer"]
+[node name="StarRatingImage3" type="TextureRect" parent="NinePatchRect/StarsContainer" unique_id=566812155]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("4_gv863")
 stretch_mode = 1
 
-[node name="StarRatingImage5" type="TextureRect" parent="NinePatchRect/StarsContainer"]
+[node name="StarRatingImage4" type="TextureRect" parent="NinePatchRect/StarsContainer" unique_id=60175593]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("4_gv863")
 stretch_mode = 1
 
-[node name="CoinsLabel" type="Label" parent="NinePatchRect"]
+[node name="StarRatingImage5" type="TextureRect" parent="NinePatchRect/StarsContainer" unique_id=802351474]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+texture = ExtResource("4_gv863")
+stretch_mode = 1
+
+[node name="CoinsLabel" type="Label" parent="NinePatchRect" unique_id=611576813]
+unique_name_in_owner = true
+layout_mode = 0
 offset_left = 140.0
 offset_top = 125.0
 offset_right = 384.0
